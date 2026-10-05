@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A concise, source-led timeline of the history of the United States, from Indigenous societies to the present day.">
+  <title>America, In Time | A History of the United States</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202a2b;
+      --muted: #65706c;
+      --paper: #f6f4ed;
+      --white: #fffefa;
+      --red: #ae4434;
+      --blue: #284f59;
+      --line: #d9d8ce;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", sans-serif;
+      --mono: "DM Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    .topbar {
+      height: 64px;
+      padding: 0 clamp(20px, 5vw, 76px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(32, 42, 43, .14);
+      background: var(--paper);
+    }
+    .brand {
+      text-decoration: none;
+      font: 600 14px var(--serif);
+      letter-spacing: 0;
+    }
+    .brand span { color: var(--red); }
+    .topbar nav { display: flex; gap: 28px; }
+    .topbar nav a {
+      color: var(--muted);
+      font-size: 12px;
+      text-decoration: none;
+    }
+    .topbar nav a:hover { color: var(--red); }
+
+    .hero {
+      position: relative;
+      min-height: 490px;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      color: white;
+      background: #26383b;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 48%;
+      filter: saturate(.72);
+    }
+    .hero::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(90deg, rgba(12, 24, 25, .82), rgba(12, 24, 25, .35) 58%, rgba(12, 24, 25, .08)), linear-gradient(0deg, rgba(12, 24, 25, .34), transparent 55%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 48px, 1120px);
+      margin: 0 auto;
+      padding: 92px 0 76px;
+    }
+    .eyebrow, .section-kicker, .date, .source-label {
+      font: 500 11px var(--mono);
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .eyebrow { color: #f0c6a1; }
+    h1 {
+      max-width: 700px;
+      margin: 18px 0 16px;
+      font: 600 clamp(44px, 7vw, 80px)/1.04 var(--serif);
+      letter-spacing: 0;
+    }
+    .hero p {
+      max-width: 510px;
+      margin: 0;
+      color: rgba(255,255,255,.84);
+      font-size: 16px;
+    }
+    .hero-credit {
+      position: absolute;
+      z-index: 1;
+      right: 22px;
+      bottom: 14px;
+      color: rgba(255,255,255,.75);
+      font: 10px var(--mono);
+    }
+
+    .intro {
+      width: min(100% - 48px, 1120px);
+      margin: 0 auto;
+      padding: 70px 0 54px;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-kicker { color: var(--red); }
+    .intro h2, .sources h2 {
+      margin: 10px 0 0;
+      font: 500 31px/1.2 var(--serif);
+    }
+    .intro-copy { max-width: 600px; color: #4f5a57; font-size: 14px; }
+    .intro-copy p { margin: 0 0 12px; }
+
+    .timeline-wrap {
+      width: min(100% - 48px, 1120px);
+      margin: 0 auto;
+      padding: 30px 0 82px;
+    }
+    .timeline-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .timeline-head h2 { margin: 0; font: 500 24px var(--serif); }
+    .timeline-head span { color: var(--muted); font: 10px var(--mono); text-transform: uppercase; }
+    .timeline { position: relative; padding: 10px 0 0 40px; }
+    .timeline::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 9px;
+      width: 1px;
+      background: var(--line);
+      content: "";
+    }
+    .era {
+      position: relative;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 34px;
+      padding: 34px 0 36px;
+      border-bottom: 1px solid var(--line);
+    }
+    .era::before {
+      position: absolute;
+      top: 43px;
+      left: -36px;
+      width: 9px;
+      height: 9px;
+      border: 2px solid var(--paper);
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 1px var(--red);
+      content: "";
+    }
+    .date { padding-top: 5px; color: var(--red); }
+    .era h3 { margin: 0 0 10px; font: 500 23px/1.25 var(--serif); }
+    .era p { max-width: 720px; margin: 0; color: #4f5a57; font-size: 14px; }
+    .era .note { margin-top: 12px; color: var(--blue); font-size: 12px; }
+    .sources {
+      padding: 52px max(24px, calc((100% - 1120px) / 2)) 58px;
+      background: #e9e8df;
+    }
+    .sources h2 { margin-bottom: 20px; }
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 30px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .source-list a {
+      display: inline-block;
+      padding: 8px 0;
+      color: var(--blue);
+      font-size: 12px;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px clamp(24px, 5vw, 76px);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 680px) {
+      .topbar { height: 58px; }
+      .topbar nav { gap: 15px; }
+      .hero { min-height: 430px; }
+      .hero-content { padding: 76px 0 62px; }
+      .hero p { font-size: 14px; }
+      .intro { grid-template-columns: 1fr; gap: 16px; padding: 48px 0 40px; }
+      .timeline-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .timeline { padding-left: 28px; }
+      .timeline::before { left: 5px; }
+      .era { grid-template-columns: 1fr; gap: 6px; padding: 27px 0 30px; }
+      .era::before { top: 34px; left: -25px; }
+      .date { font-size: 10px; }
+      .era h3 { font-size: 21px; }
+      .source-list { grid-template-columns: 1fr 1fr; gap: 4px 18px; }
+      footer { flex-direction: column; gap: 4px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">AMERICA<span>,</span> IN TIME</a>
+    <nav aria-label="Page navigation">
+      <a href="#timeline">Timeline</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="page-title">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&amp;fit=crop&amp;w=2000&amp;q=85" alt="The American flag waving against the sky">
+      <div class="hero-content">
+        <div class="eyebrow">A brief history · 15,000 BCE to today</div>
+        <h1 id="page-title">America,<br>in time.</h1>
+        <p>A story of many peoples, contested ideals, and a country continually remaking itself.</p>
+      </div>
+      <div class="hero-credit">United States · A living history</div>
+    </section>
+
+    <section class="intro" aria-labelledby="intro-title">
+      <div>
+        <div class="section-kicker">Before the beginning</div>
+        <h2 id="intro-title">No single story.<br>No simple timeline.</h2>
+      </div>
+      <div class="intro-copy">
+        <p>The history of the United States reaches back far beyond its founding. For thousands of years, Indigenous nations built communities, governed homelands, and sustained rich cultural traditions across the continent.</p>
+        <p>What follows is a starting point, not a complete account. The dates and turning points are connected to larger stories of sovereignty, migration, enslavement, resistance, invention, and change.</p>
+      </div>
+    </section>
+
+    <section class="timeline-wrap" id="timeline" aria-labelledby="timeline-title">
+      <div class="timeline-head">
+        <h2 id="timeline-title">The timeline</h2>
+        <span>Selected turning points · 10 chapters</span>
+      </div>
+      <div class="timeline">
+        <article class="era">
+          <div class="date">Before 1492</div>
+          <div>
+            <h3>Indigenous worlds</h3>
+            <p>For millennia, diverse Indigenous peoples lived throughout North America. Nations including the Haudenosaunee, Cherokee, Diné, and countless others developed distinct systems of governance, trade, agriculture, and knowledge, adapted to their homelands.</p>
+            <p class="note">There was no single Indigenous culture or political system: communities and nations were—and remain—distinct.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1492–1763</div>
+          <div>
+            <h3>Colonization and encounter</h3>
+            <p>European empires established colonies in the Americas, bringing warfare, land seizure, forced conversion, and epidemics that devastated Indigenous communities. Africans were forcibly transported and enslaved, while people from Europe and elsewhere migrated under varied conditions. Native nations negotiated, resisted, and adapted.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1763–1783</div>
+          <div>
+            <h3>Revolution and independence</h3>
+            <p>After conflict with Britain over taxation and political power, thirteen colonies declared independence in 1776. The Revolutionary War ended with British recognition of the United States in 1783. The new republic proclaimed liberty, while slavery persisted and Indigenous lands faced further encroachment.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1787–1820s</div>
+          <div>
+            <h3>A constitution, a growing republic</h3>
+            <p>The Constitution established a federal government in 1787, and the Bill of Rights followed in 1791. Political participation remained sharply limited. The country expanded westward through purchase and treaty, often under coercion, while the forced displacement of Native peoples and the institution of slavery continued.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1820s–1860</div>
+          <div>
+            <h3>Expansion, removal, and abolition</h3>
+            <p>Territorial growth intensified disputes over slavery and political power. The Indian Removal Act of 1830 led to the forced relocation of Native nations, including the Cherokee Trail of Tears. Enslaved people resisted in countless ways; abolitionists and free Black communities organized against slavery.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1861–1877</div>
+          <div>
+            <h3>Civil War and Reconstruction</h3>
+            <p>Eleven states seceded to preserve slavery, beginning the Civil War. Union victory ended legal slavery: the Thirteenth Amendment abolished it in 1865. Reconstruction amendments established citizenship and voting rights for Black men, but white supremacist violence and political retreat undermined those gains.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1877–1914</div>
+          <div>
+            <h3>Industry, migration, and resistance</h3>
+            <p>Rapid industrialization transformed work and cities. Millions immigrated, while Black Americans moved in the Great Migration's early years and Indigenous nations endured allotment and further land loss. Workers organized for safer conditions; segregation and racial violence shaped everyday life.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1914–1945</div>
+          <div>
+            <h3>War, depression, and global power</h3>
+            <p>The United States entered both world wars after years of debate about involvement. The Great Depression brought mass unemployment and the New Deal reshaped federal policy. During World War II, the government forcibly incarcerated Japanese Americans; the war ended after atomic bombs were dropped on Hiroshima and Nagasaki.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1945–1980</div>
+          <div>
+            <h3>Cold War and civil rights</h3>
+            <p>As a global superpower, the United States competed with the Soviet Union and fought wars in Korea and Vietnam. At home, a broad civil rights movement challenged segregation and discrimination, helping bring landmark laws in 1964 and 1965. Other movements pressed for Native sovereignty, women's equality, and labor rights.</p>
+          </div>
+        </article>
+        <article class="era">
+          <div class="date">1980–today</div>
+          <div>
+            <h3>A changing nation</h3>
+            <p>Economic restructuring, immigration, and new technologies reshaped daily life. The end of the Cold War brought new conflicts and debates over America's role abroad. The September 11 attacks led to wars in Afghanistan and Iraq. Contemporary movements continue to contest inequality and define the country's democratic commitments.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sources" id="sources" aria-labelledby="sources-title">
+      <div class="section-kicker">Continue exploring</div>
+      <h2 id="sources-title">Sources &amp; further reading</h2>
+      <ul class="source-list">
+        <li><a href="https://americanindian.si.edu/nk360/" target="_blank" rel="noreferrer">National Museum of the American Indian</a></li>
+        <li><a href="https://www.archives.gov/founding-docs" target="_blank" rel="noreferrer">U.S. National Archives: Founding Documents</a></li>
+        <li><a href="https://www.loc.gov/classroom-materials/united-states-history-primary-source-timeline/" target="_blank" rel="noreferrer">Library of Congress: U.S. History Timeline</a></li>
+        <li><a href="https://www.nps.gov/subjects/africanamericanheritage/index.htm" target="_blank" rel="noreferrer">National Park Service: African American Heritage</a></li>
+        <li><a href="https://www.archives.gov/research/african-americans" target="_blank" rel="noreferrer">National Archives: African American History</a></li>
+        <li><a href="https://www.si.edu/spotlight/american-history" target="_blank" rel="noreferrer">Smithsonian: American History</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <span>America, In Time · An introduction to U.S. history</span>
+    <span>Made for curious readers</span>
+  </footer>
+</body>
+</html>
